@@ -27,4 +27,4 @@ route::get('sample/destroy/{id}',[SampleController::class,'destroy']);
 
 // route::get('/anggotas',[AnggotaController::class,'destroy'])->name('anggotas.destroy');
 
-// tes
+// tes 2
