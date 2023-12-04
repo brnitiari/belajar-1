@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Sample_data extends Model
 {
     use HasFactory;
-    protected $fillable = ['first_name', 'last_name'];
+    protected $fillable = ['first_name', 'last_name', 'image'];
 }

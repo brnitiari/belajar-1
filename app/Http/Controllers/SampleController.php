@@ -21,6 +21,7 @@ class SampleController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
                         $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
+                        $button = '<button type="button" name="show" id="'.$data->id.'" class="show btn btn-info btn-sm">Show</button>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -46,9 +47,13 @@ class SampleController extends Controller
      */
     public function store(Request $request)
     {
+        
+
+
         $rules = array(
             'first_name'    =>  'required',
-            'last_name'     =>  'required'
+            'last_name'     =>  'required',
+            'image'         => 'image|file'
         );
         $error = Validator::make($request->all(), $rules);
         if($error->fails())
@@ -58,10 +63,18 @@ class SampleController extends Controller
         }
         $form_data = array(
             'first_name'        =>  $request->first_name,
-            'last_name'         =>  $request->last_name
+            'last_name'         =>  $request->last_name,
+            'image'             => $request->image('image'),
         );
-        Sample_data::create($form_data);
+        // $upload = new Upload;
+        // $upload->   image      = $nama_image  ;
+        // $upload->keterangan = $request->input('keterangan');
 
+   
+
+        // $nama_image         = $image->getClientOriginalName();
+        // $image->move('image',$image->getClientOriginalName());
+             Sample_data::create($form_data);
         return response()->json(['success' => 'Data Berhasil Masuk']);
 
     }

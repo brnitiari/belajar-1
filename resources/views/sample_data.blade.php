@@ -26,9 +26,10 @@
         table-bordered table-striped">
         <thead>
             <tr>
-                <th width="10%">Id</th>
-                <th width="30%">Nama Depan</th>
-                <th width="30%">Nama belakang</th>
+                <th width="20%">Id</th>
+                <th width="20%">Nama Depan</th>
+                <th width="20%">Nama belakang</th>
+                <th width="20%">image</th>
                 <th width="20%">Action</th>
             </tr>
         </thead>
@@ -51,7 +52,7 @@
         </div>
         <div class="modal-body">
          <span id="form_result"></span>
-         <form method="post" id="sample_form" class="form-horizontal">
+         <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
           @csrf
           <div class="form-group">
             <label class="control-label col-md-4" >Nama depan : </label>
@@ -64,6 +65,10 @@
             <div class="col-md-8">
              <input type="text" name="last_name" id="last_name" class="form-control" >
             </div>
+            <div class="mb-3">
+                      <label for="image" class="form-label">Image</label>
+                      <input class="form-control" type="file" name="image" id="image">
+                    </div>
            </div>
                 <br />
                 <div class="form-group" align="center">
