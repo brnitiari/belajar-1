@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>How to Delete or Remove Data From Mysql in Laravel 6 using Ajax</title>
+  <title>Laravel 6 Crud Application using Yajra Datatables and Ajax</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <br />
-    <h3 align="center">Insert</h3>
+    <h3 align="center">Laravel 6 Crud Application using Yajra Datatables and Ajax</h3>
     <br />
     <div align="right">
         <button type="button" name="create_record" id="create_record" 
@@ -27,8 +27,8 @@
         <thead>
             <tr>
                 <th width="10%">Id</th>
-                <th width="30%">First Name</th>
-                <th width="30%">Last Name</th>
+                <th width="30%">Nama Depan</th>
+                <th width="30%">Nama belakang</th>
                 <th width="20%">Action</th>
             </tr>
         </thead>
@@ -54,13 +54,13 @@
          <form method="post" id="sample_form" class="form-horizontal">
           @csrf
           <div class="form-group">
-            <label class="control-label col-md-4" >First Name : </label>
+            <label class="control-label col-md-4" >Nama depan : </label>
             <div class="col-md-8">
              <input type="text" name="first_name" id="first_name" class="form-control" >
             </div>
            </div>
            <div class="form-group">
-            <label class="control-label col-md-4">Last Name : </label>
+            <label class="control-label col-md-4">Nama belakang : </label>
             <div class="col-md-8">
              <input type="text" name="last_name" id="last_name" class="form-control" >
             </div>
@@ -83,14 +83,14 @@
             <div class="modal-header">
                 <button type="button" class="close" 
                 data-dismiss="modal">&times;</button>
-                <h2 class="modal-title">Confirmation</h2>
+                <h2 class="modal-title">konfirmasi</h2>
             </div>
             <div class="modal-body">
-                <h4 align="center" style="margin:0;">Hapus?</h4>
+                <h4 align="center" style="margin:0;">anda yakin ingin menghapus data ini?</h4>
             </div>
             <div class="modal-footer">
-             <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+             <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">hapus data</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">batal</button>
             </div>
         </div>
     </div>
@@ -160,8 +160,8 @@
             $('#last_name').val(data.result.last_name);
             $('#hidden_id').val(id);
             $('.modal-title').text('Edit Record');
-            $('#action_button').val('Edit');
-            $('#action').val('Edit');
+            $('#action_button').val('edit');
+            $('#action').val('edit');
             $('#formModal').modal('show');
         }
         })
@@ -219,7 +219,7 @@ $('#ok_button').click(function(){
         $.ajax({
         url:"sample/destroy/"+user_id,
         beforeSend:function(){
-        $('#ok_button').text('hapus...');
+        $('#ok_button').text('menghapus...');
         },
         success:function(data)
         {
