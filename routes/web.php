@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\AjakUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+route::get('/ajax_upload',[AjakUploadController::class,'index'] );
+route::post('/ajax_upload/action',[SampleController::class,'action'])->name('ajaxupload.action');
 route::get('sample',[SampleController::class,'index'])->name('sample.index');
-route::post('sample',[SampleController::class,'store'])->name('sample.store');
+route::post('sample/store',[SampleController::class,'store'])->name('sample.store');
 // // route::post('sample/update',[SampleController::class,'update'])->name('sample.update');
 Route::post('sample/update', [SampleController::class,'update'])->name('sample.update');
 route::get('/sample/{id}/edit',[SampleController::class,'edit']);
