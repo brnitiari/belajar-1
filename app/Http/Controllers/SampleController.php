@@ -6,6 +6,7 @@ use App\Models\Sample_data;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Validator;
+use Illuminate\Support\Facades\File;
 
 class SampleController extends Controller
 {
@@ -101,31 +102,92 @@ class SampleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sample_data $sample_data)
+    public function update(Request $request, $id)
     {
-        $rules = array(
+        $rules = validator::make($request->all(),[
             'first_name'        =>  'required',
-            'last_name'         =>  'required'
-        );
+            'last_name'         =>  'required',
+        ]);
 
-        $error = Validator::make($request->all(), $rules);
-
-        if($error->fails())
+        if($rules->fails())
         {
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['errors' => $rules->errors()->all()]);
         }
+        // else{
+            $sampleData = Sample_data::find($id);
+    //         if($data){
+    //             $sampleData = new Sample_data;
+    //             $sampleData->first_name = $request->first_name;
+    //             $sampleData->last_name = $request->last_name;
+    //             $image = $request->file('select_file');
+    //             $newNameImage = rand() . '.' . $image->getClientOriginalExtension();
+    //             $image->move(public_path('images'), $newNameImage);
+    //             $sampleData->image = $newNameImage;
+    //             if($data->hasFile('image'))
+    //             {
+    //                 $path="public/images/".$data->image;
+    //                 if(File::exists($path))
+    //                 {
+    //                     File::delete($path);
+    //                 }
+                   
+    //             }
+    //              $sampleData->save();
+    //             return response()->json([
+    //                 'success' => 'Data is successfully updated'
+    //             ], 200);
+    //             }   
+    //         else
+    //         {
+    //             return response()->json([
+    //                 'massage' => 'fail'
+    //             ], 200);
+    //         }   
+    //     }
+    // }
+    
+        // $rules = array(
+        //     'first_name'        =>  'required',
+        //     'last_name'         =>  'required',         
+        // );
 
+       
+
+        // $error = Validator::make($request->all(), $rules);
+
+        // if($error->fails())
+        // {
+        //     return response()->json(['errors' => $error->errors()->all()]);
+        // }
+        $des =  'images/'.$sampleData->image;
+        if(File::exists($des))
+           {
+            File::delete($des); 
+           }            
+        $image = $request->file('select_file');
+        $newNameImage = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $newNameImage);
+        // $sampleData = new Sample_data;
+        $sampleData->first_name = $request->first_name;
+        $sampleData->last_name = $request->last_name;
+        $sampleData->image = $newNameImage;
         $form_data = array(
             'first_name'    =>  $request->first_name,
-            'last_name'     =>  $request->last_name
+            'last_name'     =>  $request->last_name,
+            'select_file'   => $newNameImage
+
         );
+        $sampleData->update();
+        return response()->json([
+                            'success' => 'Data is successfully updated'
+                        ], 200);
+        // Sample_data::whereId($request->hidden_id)->update($form_data);
 
-        Sample_data::whereId($request->hidden_id)->update($form_data);
-
-        return response()->json(['success' => 'Data is successfully updated']);
+      
 
 
-    }
+        }
+    
 
     /**
      * Remove the specified resource from storage.

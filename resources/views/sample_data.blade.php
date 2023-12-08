@@ -81,7 +81,7 @@
                                 <div class="col-12 text-right">
                                     <input type="hidden" name="action" id="action" value="Add" />
                                     <input type="hidden" name="hidden_id" id="hidden_id" />
-                                    <button class="btn btn-primary btn-icon waves-effect waves-light" name="upload" id="upload" class="btn btn-primary" value="Add" type="submit">Tambah</button>
+                                    <button class="btn btn-primary btn-icon waves-effect waves-light" name="action" id="action" class="btn btn-primary" value="Add" type="submit">Tambah</button>
                                 </div>
                             </div>
                         </form>

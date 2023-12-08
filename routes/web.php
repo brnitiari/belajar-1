@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-route::get('/ajax_upload',[AjakUploadController::class,'index'] );
+// route::get('/ajax_upload',[AjakUploadController::class,'index'] );
 route::post('/ajax_upload/action',[SampleController::class,'action'])->name('ajaxupload.action');
 route::get('sample',[SampleController::class,'index'])->name('sample.index');
 route::post('sample/store',[SampleController::class,'store'])->name('sample.store');
