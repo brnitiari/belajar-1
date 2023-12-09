@@ -102,91 +102,54 @@ class SampleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+
+
+    public function update(Request $request)
     {
-        $rules = validator::make($request->all(),[
-            'first_name'        =>  'required',
-            'last_name'         =>  'required',
-        ]);
+        $rules = array(
+            'first_name'    =>  'required',
+            'last_name'     =>  'required'        
+        );
 
-        if($rules->fails())
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails())
         {
-            return response()->json(['errors' => $rules->errors()->all()]);
+            return response()->json(['errors' => $error->errors()->all()]);
         }
-        // else{
-            $sampleData = Sample_data::find($id);
-    //         if($data){
-    //             $sampleData = new Sample_data;
-    //             $sampleData->first_name = $request->first_name;
-    //             $sampleData->last_name = $request->last_name;
-    //             $image = $request->file('select_file');
-    //             $newNameImage = rand() . '.' . $image->getClientOriginalExtension();
-    //             $image->move(public_path('images'), $newNameImage);
-    //             $sampleData->image = $newNameImage;
-    //             if($data->hasFile('image'))
-    //             {
-    //                 $path="public/images/".$data->image;
-    //                 if(File::exists($path))
-    //                 {
-    //                     File::delete($path);
-    //                 }
-                   
-    //             }
-    //              $sampleData->save();
-    //             return response()->json([
-    //                 'success' => 'Data is successfully updated'
-    //             ], 200);
-    //             }   
-    //         else
-    //         {
-    //             return response()->json([
-    //                 'massage' => 'fail'
-    //             ], 200);
-    //         }   
-    //     }
-    // }
+
+        if($request->select_file)
+        {
+            $rules = array(
+                'select_file'   =>  'image|mimes:jpeg,png,jpg'         
+            );
     
-        // $rules = array(
-        //     'first_name'        =>  'required',
-        //     'last_name'         =>  'required',         
-        // );
+            $error = Validator::make($request->all(), $rules);
+    
+            if($error->fails())
+            {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+        }
 
-       
-
-        // $error = Validator::make($request->all(), $rules);
-
-        // if($error->fails())
-        // {
-        //     return response()->json(['errors' => $error->errors()->all()]);
-        // }
-        $des =  'images/'.$sampleData->image;
-        if(File::exists($des))
-           {
-            File::delete($des); 
-           }            
-        $image = $request->file('select_file');
-        $newNameImage = rand() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('images'), $newNameImage);
-        // $sampleData = new Sample_data;
+        $sampleData = Sample_data::find($request->hidden_id);
         $sampleData->first_name = $request->first_name;
         $sampleData->last_name = $request->last_name;
-        $sampleData->image = $newNameImage;
-        $form_data = array(
-            'first_name'    =>  $request->first_name,
-            'last_name'     =>  $request->last_name,
-            'select_file'   => $newNameImage
+        if($request->select_file)
+        {
+            File::delete(public_path('images/'. $sampleData->image));
 
-        );
-        $sampleData->update();
-        return response()->json([
-                            'success' => 'Data is successfully updated'
-                        ], 200);
-        // Sample_data::whereId($request->hidden_id)->update($form_data);
+            $image = $request->file('select_file');
+            $newNameImage = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $newNameImage);
 
-      
-
-
+            $sampleData->image = $newNameImage;
         }
+        $sampleData->save();
+
+        return response()->json(['success' => 'Berhasil mengubah data']);
+
+    }
     
 
     /**

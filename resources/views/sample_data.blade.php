@@ -221,8 +221,8 @@
                             html = '<div class="alert alert-success">' + data.success + '</div>';
                             $('#sample_form')[0].reset();
                             $('#user_table').DataTable().ajax.reload();
+                            $('#formModal').modal('hide');
                         }
-
                         $('#form_result').html(html);
                     }
                 });
@@ -243,11 +243,8 @@
                     },
                     success:function(data)
                     {
-                        setTimeout(function(){
-                            $('#confirmModal').modal('hide');
-                            $('#user_table').DataTable().ajax.reload();
-                            alert('Data Deleted');
-                        }, 2000);
+                        $('#confirmModal').modal('hide');
+                        $('#user_table').DataTable().ajax.reload();
                     }
                 });
             });
